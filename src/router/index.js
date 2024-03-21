@@ -6,7 +6,7 @@ import ViewPreviousShopping from '@/views/ViewPreviousShopping.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  linkActiveClass: 'text-[#0092fb]',
+  linkActiveClass: 'text-blue-500',
   routes: [
     {
       path: '/',

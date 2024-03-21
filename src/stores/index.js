@@ -9,24 +9,26 @@ export const useProductsStore = defineStore('products', {
           name: 'Fine steak',
           price: '2.30',
           unit: 'kg',
-          shortdesc: 'Top quality wagyu beef, grass fed',
-          imageUrl: '../assets/images/fine-stake.png',
-          favorite: true
+          quantity: 0,
+          description: 'Top quality wagyu beef, grass fed',
+          imageUrl: '../assets/images/fine-stake.png'
         },
         {
           id: 2,
           name: 'Tasty bread',
           price: '2.30',
-          unit: 'piece',
-          shortdesc: 'Fluffy and fresh, made for your favourite cream',
+          unit: 'pcs',
+          quantity: 0,
+          description: 'Fluffy and fresh, made for your favourite cream',
           imageUrl: '../assets/images/tasty-bread.png'
         },
         {
           id: 3,
           name: 'Choco milk',
           price: '2.30',
-          unit: 'piece',
-          shortdesc: 'Made by brown cows',
+          unit: 'pcs',
+          quantity: 0,
+          description: 'Made by brown cows',
           imageUrl: '../assets/images/choco-milk.png'
         },
         {
@@ -34,15 +36,17 @@ export const useProductsStore = defineStore('products', {
           name: 'Tomatoes',
           price: '2.00',
           unit: 'kg',
-          shortdesc: 'Fresh, ripe, ready for a salad',
+          quantity: 0,
+          description: 'Fresh, ripe, ready for a salad',
           imageUrl: '../assets/images/tomatoes.png'
         },
         {
           id: 5,
           name: 'Olive oil',
           price: '5.42',
-          unit: 'piece',
-          shortdesc: 'Genco Pura Olive Oil Company ',
+          unit: 'pcs',
+          quantity: 0,
+          description: 'Genco Pura Olive Oil Company ',
           imageUrl: '../assets/images/olive-oil.png'
         },
         {
@@ -50,10 +54,30 @@ export const useProductsStore = defineStore('products', {
           name: 'Bananas',
           price: '2.30',
           unit: 'kg',
-          shortdesc: 'Imported directly from Banana republic',
+          quantity: 0,
+          description: 'Imported directly from Banana republic',
           imageUrl: '../assets/images/bananas.png'
         }
-      ]
+      ],
+      cart: []
+    }
+  },
+  actions: {
+    addToCart(product) {
+      this.cart.push(product)
+    },
+    removeFromCart(product) {
+      let productIndex = this.cart.indexOf(product)
+      this.cart.splice(productIndex, 1)
+      product.quantity = 0
+    },
+    reduceQuantity(product) {
+      product.quantity--
+    }
+  },
+  getters: {
+    getProducts: (state) => {
+      state.products
     }
   }
 })

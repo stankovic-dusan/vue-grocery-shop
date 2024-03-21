@@ -16,7 +16,7 @@ import { ref } from 'vue'
 
 const navLinks = ref([
   { label: 'All Products', route: '/' },
-  { label: 'My Favorites', route: '/favorites' }
-  // { label: 'My Previous Shoppings', route: '/previous' }
+  { label: 'My Favorites', route: '/favorites' },
+  { label: 'My Previous Shoppings', route: '/previous' }
 ])
 </script>
