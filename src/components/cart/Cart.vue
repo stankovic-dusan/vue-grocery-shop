@@ -20,7 +20,7 @@
       <p class="font-robotoSlab font-normal text-base">Tax included</p>
     </div>
     <div class="w-1/2 flex justify-end">
-      <h6 class="font-robotoSlab font-bold text-2xl">${{ cartTotal }}</h6>
+      <h6 class="font-robotoSlab font-bold text-2xl">$ {{ cartTotal }}</h6>
     </div>
   </div>
   <div class="w-full h-auto flex justify-center items-center">
@@ -33,16 +33,28 @@
 </template>
 
 <script setup>
+import { ref, watch } from 'vue'
 import { useProductsStore } from '@/stores/index'
 
 import BaseButton from '@/components/ui/BaseButton.vue'
 
-const productsStore = useProductsStore()
-
-let cart = productsStore.cart
+const cart = useProductsStore().cart
+const cartTotal = ref('0.00')
 
 const productTotalPrice = (quantity, price) => {
   let total = quantity * price
   return total.toFixed(2)
 }
+
+const calculateCartTotal = () => {
+  let total = 0
+  for (const product of cart) {
+    total += parseFloat(productTotalPrice(product.quantity, product.price))
+  }
+  return total.toFixed(2)
+}
+
+watch(cart, () => {
+  cartTotal.value = calculateCartTotal()
+})
 </script>

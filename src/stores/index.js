@@ -11,7 +11,7 @@ export const useProductsStore = defineStore('products', {
           unit: 'kg',
           quantity: 0,
           description: 'Top quality wagyu beef, grass fed',
-          imageUrl: '../assets/images/fine-stake.png'
+          imageUrl: '/src/assets/images/fine-stake.png'
         },
         {
           id: 2,
@@ -59,12 +59,22 @@ export const useProductsStore = defineStore('products', {
           imageUrl: '../assets/images/bananas.png'
         }
       ],
-      cart: []
+      cart: [],
+      cartTotal: 0
     }
   },
   actions: {
     addToCart(product) {
-      this.cart.push(product)
+      let inCart = false
+
+      this.cart.forEach((el) => {
+        if (el.id === product.id) inCart = true
+      })
+
+      if (inCart === false) {
+        this.cart.push(product)
+        product.quantity = 1
+      } else product.quantity++
     },
     removeFromCart(product) {
       let productIndex = this.cart.indexOf(product)
@@ -73,11 +83,20 @@ export const useProductsStore = defineStore('products', {
     },
     reduceQuantity(product) {
       product.quantity--
+    },
+    addToFavorite(product) {
+      product.favorite = !product.favorite
+    },
+    getProductImg(imageUrl) {
+      return new URL(imageUrl, import.meta.url).href
     }
   },
   getters: {
     getProducts: (state) => {
-      state.products
+      return state.products
+    },
+    getFavoritesProducts: (state) => {
+      return state.products.filter((product) => product.favorite === true)
     }
   }
 })

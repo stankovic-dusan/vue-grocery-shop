@@ -1,8 +1,20 @@
 <template>
-  <div class="bg-white h-auto flex flex-col rounded-2xl px-4 py-6 shadow-custom">
+  <div class="w-full bg-white flex flex-col rounded-2xl px-4 py-6 shadow-custom select-none">
     <div class="w-full h-auto flex justify-end">
-      <Heart v-if="false" class="cursor-pointer" :size="iconSize" fillColor="#FF2738" />
-      <HeartOutline v-else class="cursor-pointer" :size="iconSize" fillColor="#979797" />
+      <Heart
+        v-if="product.favorite === true"
+        class="cursor-pointer"
+        :size="iconSize"
+        fillColor="#FF2738"
+        @click="addProductToFavorite(product)"
+      />
+      <HeartOutline
+        v-else
+        class="cursor-pointer"
+        :size="iconSize"
+        fillColor="#979797"
+        @click="addProductToFavorite(product)"
+      />
     </div>
     <div class="w-[200px] h-[200px] self-center flex justify-center items-center">
       <img :src="image" alt="product-img" class="w-[80%] h-[80%]" />
@@ -52,29 +64,20 @@
 import { ref } from 'vue'
 import { useProductsStore } from '@/stores/index'
 
-import BaseButton from './ui/BaseButton.vue'
-import BaseInput from './ui/BaseInput.vue'
+import BaseButton from '@/components/ui/BaseButton.vue'
+import BaseInput from '@/components/ui/BaseInput.vue'
 
 import HeartOutline from 'vue-material-design-icons/HeartOutline.vue'
 import Heart from 'vue-material-design-icons/Heart.vue'
 
-const props = defineProps(['product', 'name', 'image', 'description', 'price', 'unit', 'favorite'])
+const props = defineProps(['product', 'name', 'image', 'description', 'price', 'unit'])
 
 const productsStore = useProductsStore()
 
 const iconSize = ref(20)
 
 const addProductToCart = (product) => {
-  let inCart = false
-
-  productsStore.cart.forEach((el) => {
-    if (el.id === product.id) inCart = true
-  })
-
-  if (inCart === false) {
-    productsStore.addToCart(product)
-    product.quantity = 1
-  } else product.quantity++
+  productsStore.addToCart(product)
 }
 
 const removeProductFromCart = (product) => {
@@ -83,5 +86,9 @@ const removeProductFromCart = (product) => {
 
 const reduceProductQuantity = (product) => {
   productsStore.reduceQuantity(product)
+}
+
+const addProductToFavorite = (product) => {
+  productsStore.addToFavorite(product)
 }
 </script>

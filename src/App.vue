@@ -1,6 +1,6 @@
 <template>
-  <div class="w-auto h-full flex flex-col justify-center items-center px-20 py-12 overflow-hidden">
-    <div class="h-full lg:max-w-[1520px] md:w-full">
+  <div class="w-full h-full flex flex-col justify-center items-center px-20 py-12">
+    <div class="md:w-full lg:max-w-[1520px]">
       <h1 class="font-robotoSlab font-bold text-4xl">Your regular grocery shop</h1>
       <TheNavigation />
       <RouterView />
